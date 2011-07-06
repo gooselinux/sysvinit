@@ -1,0 +1,50 @@
+--- sysvinit-2.85/man/inittab.5.foo	2005-11-18 12:38:40.000000000 -0500
++++ sysvinit-2.85/man/inittab.5	2005-11-18 12:40:50.000000000 -0500
+@@ -193,7 +193,7 @@
+ id:2:initdefault:
+ 
+ # Boot-time system configuration/initialization script.
+-si::sysinit:/etc/init.d/rcS
++si::sysinit:/etc/rc.sysinit
+ 
+ # What to do in single-user mode.
+ ~:S:wait:/sbin/sulogin
+@@ -206,24 +206,24 @@
+ # Runlevels 2-5 are multi-user.
+ # Runlevel 6 is reboot.
+ 
+-l0:0:wait:/etc/init.d/rc 0
+-l1:1:wait:/etc/init.d/rc 1
+-l2:2:wait:/etc/init.d/rc 2
+-l3:3:wait:/etc/init.d/rc 3
+-l4:4:wait:/etc/init.d/rc 4
+-l5:5:wait:/etc/init.d/rc 5
+-l6:6:wait:/etc/init.d/rc 6
++l0:0:wait:/etc/rc 0
++l1:1:wait:/etc/rc 1
++l2:2:wait:/etc/rc 2
++l3:3:wait:/etc/rc 3
++l4:4:wait:/etc/rc 4
++l5:5:wait:/etc/rc 5
++l6:6:wait:/etc/rc 6
+ 
+ # What to do at the "3 finger salute".
+-ca::ctrlaltdel:/sbin/shutdown -t1 -h now
++ca::ctrlaltdel:/sbin/shutdown -t3 -r now
+ 
+ # Runlevel 2,3: getty on virtual consoles
+-# Runlevel   3: getty on terminal (ttyS0) and modem (ttyS1)
+-1:23:respawn:/sbin/getty tty1 VC linux
+-2:23:respawn:/sbin/getty tty2 VC linux
+-3:23:respawn:/sbin/getty tty3 VC linux
+-4:23:respawn:/sbin/getty tty4 VC linux
+-S0:3:respawn:/sbin/getty -L 9600 ttyS0 vt320
++# Runlevel   3: mgetty on terminal (ttyS0) and modem (ttyS1)
++1:23:respawn:/sbin/mingetty tty1
++2:23:respawn:/sbin/mingetty tty2
++3:23:respawn:/sbin/mingetty tty3
++4:23:respawn:/sbin/mingetty tty4
++S0:3:respawn:/sbin/agetty ttyS0 9600 vt100-nav
+ S1:3:respawn:/sbin/mgetty -x0 -D ttyS1
+ 
+ .fi
